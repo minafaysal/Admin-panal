@@ -1,1 +1,37 @@
-<p>sidebar works!</p>
+
+  <nav id="sidebar" [class.active]="isCollapsed">
+    <div class="custom-menu">
+      <button
+      (click)="toggleCollapse()"
+        type="button"
+        id="sidebarCollapse"
+        class="btn btn-primary"
+      ></button>
+    </div>
+    <div
+      class="img bg-wrap text-center py-4"
+      style="background-image: url(../../../../assets/img/bg_1.jpg)"
+    >
+      <div class="user-logo">
+        <img
+          src="/assets/img/admin-img.png"
+          alt="logo"
+          class="rounded-md cursor-pointer d-block img"
+          style="width: 7rem; height: 7rem"
+        />
+        <h3>Welcome</h3>
+      </div>
+    </div>
+    <ul class="list-unstyled components mb-5">
+      <li class="active">
+        <a routerLink="/admin/products"><span class="fa fa-home mr-3"></span> Products</a>
+      </li>
+      <li>
+        <a routerLink="/admin/categories"><span class="fa fa-gift mr-3"></span> categories</a>
+      </li>
+      <li>
+        <a (click)="signOut()"><span class="fa fa-sign-out mr-3"></span> Sign Out</a>
+      </li>
+    </ul>
+  </nav>
+
