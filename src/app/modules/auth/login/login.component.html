@@ -1,0 +1,54 @@
+<section class="vh-100">
+  <div class="container py-5 h-100">
+    <div class="row d-flex align-items-center justify-content-center h-100">
+      <div class="col-md-8 col-lg-7 col-xl-6">
+        <img
+          src="/assets/images/icons/login.svg"
+          class="img-fluid"
+          alt="Login illustration"
+        />
+      </div>
+      <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          <div class="form-outline mb-4">
+            <label class="form-label" for="username">User name</label>
+            <input
+              formControlName="username"
+              type="text"
+              id="username"
+              class="form-control form-control-lg"
+              [ngClass]="{ 'is-invalid': username?.invalid && username?.touched }"
+            />
+            <div *ngIf="username?.invalid && username?.touched" class="invalid-feedback">
+              Username is required.
+            </div>
+          </div>
+
+          <div class="form-outline mb-4">
+            <label class="form-label" for="password">Password</label>
+            <input
+              formControlName="password"
+              type="password" 
+              id="password"
+              class="form-control form-control-lg"
+              [ngClass]="{ 'is-invalid': password?.invalid && password?.touched }"
+            />
+            <div *ngIf="password?.invalid && password?.touched" class="invalid-feedback">
+              Password is required.
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-around align-items-center mb-4">
+            <button
+              type="submit"
+              class="btn btn-primary btn-lg btn-block"
+              [disabled]="!loginForm.valid"
+            >
+              Sign in
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
