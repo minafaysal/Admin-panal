@@ -1,0 +1,11 @@
+:ng-deep ul li {
+  color: white;
+}
+:ng-deep .navbar-toggler {
+  background-color: white !important;
+  --bs-navbar-color: white !important;
+}
+.navbar-toggler {
+  background-color: white !important;
+  color: white;
+}

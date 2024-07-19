@@ -64,7 +64,7 @@ export class LoginComponent extends ComponentBase implements OnInit {
           this.spinner.hide();
           this.loading = false; 
           this.toastr.success('Login Successfully!');
-          this.router.navigate(['/products']);
+          this.router.navigate(['/admin/products']);
         },
         (error) => {
           this.spinner.hide();
