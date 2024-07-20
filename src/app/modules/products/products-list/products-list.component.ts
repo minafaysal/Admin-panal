@@ -18,7 +18,9 @@ import { SharedModule } from '../../../shared/shared.module';
 })
 export class ProductsListComponent extends BaseComponent implements OnInit {
   productsList: Product[] = [];
+  filteredProducts: Product[] = [];
   searchTerm: string = '';
+  selectedCategory: string = '';
 
   constructor(
     private productService: ProductService,
@@ -38,6 +40,7 @@ export class ProductsListComponent extends BaseComponent implements OnInit {
       .pipe(takeUntil(this.destroy$))
       .subscribe((products) => {
         this.productsList = products;
+        this.filteredProducts = products;
         this.spinner.hide();
       });
 
@@ -57,5 +60,17 @@ export class ProductsListComponent extends BaseComponent implements OnInit {
 
   addNewProduct(): void {
     this.router.navigate(['/admin/products/add']);
+  }
+  filterProducts(products: Product[]): Product[] {
+    return this.productService.filterProducts(
+      products,
+      this.searchTerm,
+      this.selectedCategory
+    );
+  }
+
+  onCategoryChange(event: any): void {
+    this.selectedCategory = event.target.value;
+    this.filteredProducts = this.filterProducts(this.productsList);
   }
 }

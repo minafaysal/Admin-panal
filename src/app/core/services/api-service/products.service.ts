@@ -76,4 +76,16 @@ export class ProductService {
   getProductById(id: number): Observable<Product> {
     return this.http.get<Product>(`${this.apiUrl}/${id}`);
   }
+
+  filterProducts(
+    products: Product[],
+    searchTerm: string,
+    category: string
+  ): Product[] {
+    return products.filter(
+      (product) =>
+        product.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
+        product.category.toLowerCase().includes(category.toLowerCase())
+    );
+  }
 }
