@@ -4,6 +4,7 @@ import {
   FormBuilder,
   Validators,
   ReactiveFormsModule,
+  FormsModule,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, takeUntil } from 'rxjs';
@@ -13,11 +14,23 @@ import { CommonModule } from '@angular/common';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { BaseComponent } from '../../../core/base/common-base';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-add-edit-product',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [
+    ReactiveFormsModule,
+    CommonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule,
+    FormsModule,
+  ],
   templateUrl: './add-edit-product.component.html',
   styleUrl: './add-edit-product.component.scss',
 })
@@ -49,7 +62,7 @@ export class AddEditProductComponent extends BaseComponent implements OnInit {
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
-    this.productID = Number(id)
+    this.productID = Number(id);
     if (this.productID) {
       this.isEditMode = true;
       this.loadProduct(this.productID);
@@ -65,8 +78,7 @@ export class AddEditProductComponent extends BaseComponent implements OnInit {
             this.productForm.patchValue(product);
           } else {
             // Product is null, fallback to BehaviorSubject
-            const products = this.productService
-              .getCurrentProducts()
+            const products = this.productService.getCurrentProducts();
             const fallbackProduct = products.find((p) => p.id === id);
             if (fallbackProduct) {
               this.productForm.patchValue(fallbackProduct);
