@@ -48,6 +48,7 @@ export class CategoriesListComponent extends BaseComponent implements OnInit {
       .pipe(takeUntil(this.destroy$))
       .subscribe((categories) => {
         this.categoriesList = categories;
+        this.spinner.hide();
       });
 
     // Check if categories are already loaded, if not, fetch from server
