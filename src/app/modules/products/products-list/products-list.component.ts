@@ -1,12 +1,76 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Product } from '../../../core/models/product.model';
+import { ProductService } from '../../../core/services/api-service/products.service';
+import { ProductCardComponent } from '../../../shared/components/product-card/product-card.component';
+import { takeUntil } from 'rxjs';
+import { BaseComponent } from '../../../core/base/common-base';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { SharedModule } from '../../../shared/shared.module';
 
 @Component({
   selector: 'app-products-list',
   standalone: true,
-  imports: [],
+  imports: [ProductCardComponent, FormsModule, SharedModule],
   templateUrl: './products-list.component.html',
-  styleUrl: './products-list.component.scss'
+  styleUrl: './products-list.component.scss',
 })
-export class ProductsListComponent {
+export class ProductsListComponent extends BaseComponent implements OnInit {
+  productsList: Product[] = [];
+  filteredProducts: Product[] = [];
+  searchTerm: string = '';
+  selectedCategory: string = '';
 
+  constructor(
+    private productService: ProductService,
+    private spinner: NgxSpinnerService,
+    private router: Router
+  ) {
+    super();
+  }
+
+  ngOnInit(): void {
+    this.spinner.show();
+    this.loadProducts();
+  }
+  private loadProducts() {
+    // Subscribe to products$ to get the current list of products
+    this.productService.products$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((products) => {
+        this.productsList = products;
+        this.filteredProducts = products;
+        this.spinner.hide();
+      });
+
+    // Check if products are already loaded, if not, fetch from server
+    if (this.productService.getCurrentProducts().length === 0) {
+      this.productService.fetchProducts().subscribe();
+    }
+  }
+
+  deleteProduct(id: number): void {
+    this.productService.deleteProduct(id).subscribe(() => {
+      this.productsList = this.productsList.filter(
+        (product) => product.id !== id
+      );
+    });
+  }
+
+  addNewProduct(): void {
+    this.router.navigate(['/admin/products/add']);
+  }
+  filterProducts(products: Product[]): Product[] {
+    return this.productService.filterProducts(
+      products,
+      this.searchTerm,
+      this.selectedCategory
+    );
+  }
+
+  onCategoryChange(event: any): void {
+    this.selectedCategory = event.target.value;
+    this.filteredProducts = this.filterProducts(this.productsList);
+  }
 }

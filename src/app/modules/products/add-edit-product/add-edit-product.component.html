@@ -1,0 +1,64 @@
+<div class="container form">
+  <form [formGroup]="productForm" (ngSubmit)="saveProduct()">
+    <mat-form-field appearance="fill" class="mb-3 w-100">
+      <mat-label>Title</mat-label>
+      <input
+        matInput
+        formControlName="title"
+        required
+        minlength="3"
+      />
+      <mat-error *ngIf="productForm.get('title')?.hasError('required') && productForm.get('title')?.touched">
+        Title is required.
+      </mat-error>
+      <mat-error *ngIf="productForm.get('title')?.hasError('minlength') && productForm.get('title')?.touched">
+        Title should be at least 3 characters long.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="mb-3 w-100">
+      <mat-label>Description</mat-label>
+      <textarea
+        matInput
+        formControlName="description"
+      ></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="mb-3 w-100">
+      <mat-label>Price</mat-label>
+      <input
+        matInput
+        type="number"
+        min="0"
+        formControlName="price"
+        required
+      />
+      <mat-error *ngIf="productForm.get('price')?.hasError('required') && productForm.get('price')?.touched">
+        Price is required.
+      </mat-error>
+      <mat-error *ngIf="productForm.get('price')?.hasError('min') && productForm.get('price')?.touched">
+        Price should be a positive number.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="mb-3 w-100">
+      <mat-label>Category</mat-label>
+      <input
+        matInput
+        formControlName="category"
+      />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="mb-3 w-100">
+      <mat-label>Image URL</mat-label>
+      <input
+        matInput
+        formControlName="image"
+      />
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit">
+      {{ isEditMode ? 'Update Product' : 'Add Product' }}
+    </button>
+  </form>
+</div>

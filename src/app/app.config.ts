@@ -13,6 +13,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { SharedModule } from './shared/shared.module';
 import { AdminLayoutModule } from './modules/admin-layout/admin-layout.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 
 export const appConfig: ApplicationConfig = {
@@ -26,6 +27,7 @@ export const appConfig: ApplicationConfig = {
       ToastNoAnimationModule,
       SharedModule,
       AdminLayoutModule,
+      AuthModule,
       ToastrModule.forRoot({
         timeOut: 3000, 
         positionClass: 'toast-top-right',

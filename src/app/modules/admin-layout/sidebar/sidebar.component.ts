@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ComponentBase } from '../../../core/base/common-base';
+import { BaseComponent } from '../../../core/base/common-base';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../core/services/api-service/auth.service';
 import { ToastrService } from 'ngx-toastr';
@@ -9,8 +9,8 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
 })
-export class SidebarComponent extends ComponentBase {
-  isCollapsed: boolean =false;
+export class SidebarComponent extends BaseComponent {
+  isCollapsed: boolean = false;
 
   constructor(private authService: AuthService, private toastr: ToastrService) {
     super();

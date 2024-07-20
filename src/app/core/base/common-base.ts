@@ -3,7 +3,7 @@ import { Subject } from 'rxjs';
 @Directive({
   selector: '[appComponentBase]',
 })
-export abstract class ComponentBase implements OnDestroy {
+export abstract class BaseComponent implements OnDestroy {
   destroy$ = new Subject<void>();
   loading: boolean = false;
   public ngOnDestroy(): void {
