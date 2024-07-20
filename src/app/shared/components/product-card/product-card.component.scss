@@ -1,0 +1,27 @@
+
+.truncate-title,
+.truncate-description {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.card {
+  max-width: 350px;
+  min-height: 550px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card-img-top {
+  min-height: 250px;
+  max-height: 250px;
+  width: 100%;
+  object-fit: cover;
+}
+
+.category {
+  border-radius: 30px;
+  padding: 5px 15px;
+}
