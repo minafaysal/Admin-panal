@@ -41,10 +41,17 @@ export class CategoryService {
 
   updateCategory(category: Category): void {
     const currentCategories = this.categoriesSubject.getValue();
-    const updatedCategories = currentCategories.map((c) =>
-      c === category ? category : c
-    );
-    this.categoriesSubject.next(updatedCategories);
+    const categoryIndex = currentCategories.findIndex((c) => c === category);
+    if (categoryIndex > -1) {
+      // Update the existing category
+      const updatedCategories = [...currentCategories];
+      updatedCategories[categoryIndex] = category;
+      this.categoriesSubject.next(updatedCategories);
+    } else {
+      // If the category does not exist, push it to the array
+      const updatedCategories = [...currentCategories, category];
+      this.categoriesSubject.next(updatedCategories);
+    }
   }
 
   deleteCategory(category: Category): void {
