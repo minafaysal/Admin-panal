@@ -8,17 +8,27 @@ import { takeUntil } from 'rxjs';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-categories-list',
   standalone: true,
-  imports: [MatChipsModule, MatFormFieldModule, MatChipsModule, MatIconModule],
+  imports: [
+    MatChipsModule,
+    MatFormFieldModule,
+    MatChipsModule,
+    MatIconModule,
+    FormsModule,
+    CommonModule,
+  ],
   templateUrl: './categories-list.component.html',
   styleUrl: './categories-list.component.scss',
 })
 export class CategoriesListComponent extends BaseComponent implements OnInit {
   categoriesList: Category[] = [];
-
+  showInputField = false;
+  newCategoryName!: Category | null;
   constructor(
     private categoryService: CategoryService,
     private spinner: NgxSpinnerService,
@@ -45,9 +55,19 @@ export class CategoriesListComponent extends BaseComponent implements OnInit {
     this.spinner.hide();
   }
 
-  addNewCategory(): void {}
+  addNewCategory(category: Category): void {
+    this.categoryService.addCategory(category);
+  }
 
   removeCategory(category: Category): void {
     this.categoryService.deleteCategory(category);
+  }
+
+  submitCategory(): void {
+    if (this.newCategoryName) {
+      this.addNewCategory(this.newCategoryName);
+      this.newCategoryName = null;
+      this.showInputField = false;
+    }
   }
 }
