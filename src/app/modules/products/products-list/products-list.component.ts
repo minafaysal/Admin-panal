@@ -5,6 +5,7 @@ import { ProductCardComponent } from '../../../shared/components/product-card/pr
 import { takeUntil } from 'rxjs';
 import { BaseComponent } from '../../../core/base/common-base';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-products-list',
@@ -19,7 +20,8 @@ export class ProductsListComponent extends BaseComponent implements OnInit {
 
   constructor(
     private productService: ProductService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private router: Router
   ) {
     super();
   }
@@ -54,7 +56,6 @@ export class ProductsListComponent extends BaseComponent implements OnInit {
   // }
 
   deleteProduct(id: number): void {
-
     this.productService.deleteProduct(id).subscribe(() => {
       this.productsList = this.productsList.filter(
         (product) => product.id !== id
@@ -62,5 +63,7 @@ export class ProductsListComponent extends BaseComponent implements OnInit {
     });
   }
 
-  addNewProduct() {}
+  addNewProduct(): void {
+    this.router.navigate(['/admin/products/add']);
+  }
 }
