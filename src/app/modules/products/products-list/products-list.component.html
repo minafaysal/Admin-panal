@@ -1,5 +1,6 @@
 <div class="d-flex justify-content-between align-items-center w-100">
   <h4 class="mt-4 fw-semibold">Products Section</h4>
+
   <button
     class="btn btn-primary btn-sm btn-block mb-4 mt-5"
     (click)="addNewProduct()"
@@ -7,4 +8,18 @@
     Add New Product
   </button>
 </div>
-<app-product-card [productsList]="productsList" (deleteProductEvent)="deleteProduct($event)"></app-product-card>
+<form class="d-flex mb-4" role="search" >
+ <input
+    class="form-control me-2"
+    type="search"
+    placeholder="Search"
+    aria-label="Search"
+    [(ngModel)]="searchTerm"
+    name="searchTerm"
+  />
+  <button class="btn btn-outline-success" type="submit">Search</button>
+</form>
+<app-product-card
+  [productsList]="productsList| searchFilter: searchTerm"
+  (deleteProductEvent)="deleteProduct($event)"
+></app-product-card>

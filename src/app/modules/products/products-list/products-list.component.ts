@@ -6,17 +6,19 @@ import { takeUntil } from 'rxjs';
 import { BaseComponent } from '../../../core/base/common-base';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { SharedModule } from '../../../shared/shared.module';
 
 @Component({
   selector: 'app-products-list',
   standalone: true,
-  imports: [ProductCardComponent],
+  imports: [ProductCardComponent, FormsModule, SharedModule],
   templateUrl: './products-list.component.html',
   styleUrl: './products-list.component.scss',
 })
 export class ProductsListComponent extends BaseComponent implements OnInit {
   productsList: Product[] = [];
-  // searchTerm: string = '';
+  searchTerm: string = '';
 
   constructor(
     private productService: ProductService,
@@ -44,16 +46,6 @@ export class ProductsListComponent extends BaseComponent implements OnInit {
       this.productService.fetchProducts().subscribe();
     }
   }
-
-  // searchProducts(): void {
-  //   if (this.searchTerm) {
-  //     this.products = this.products.filter((product) =>
-  //       product.title.toLowerCase().includes(this.searchTerm.toLowerCase())
-  //     );
-  //   } else {
-  //     this.loadProducts();
-  //   }
-  // }
 
   deleteProduct(id: number): void {
     this.productService.deleteProduct(id).subscribe(() => {
