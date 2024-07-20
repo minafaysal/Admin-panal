@@ -1,1 +1,19 @@
-<p>categories-list works!</p>
+<div class="d-flex justify-content-between align-items-center w-100">
+  <h4 class="mt-4 fw-semibold">Categories Section</h4>
+
+  <button
+    class="btn btn-primary btn-sm btn-block mb-4 mt-5"
+    (click)="addNewCategory()"
+  >
+    Add New Category
+  </button>
+</div>
+<mat-chip-set aria-label="Fish selection">
+  @for(category of categoriesList; track category.id){
+  <mat-chip>{{ category }}</mat-chip> }@empty {
+  <div clas="d-flex justify-content-center">
+    <h4>No Categories Found</h4>
+  </div>
+  }
+</mat-chip-set>
+

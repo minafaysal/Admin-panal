@@ -1,0 +1,11 @@
+// .bg-primary:hover {
+//   background-color: #004085;
+// }
+:ng-deep .mat-mdc-standard-chip {
+  background-color: #004085;
+}
+.mdc-evolution-chip__cell {
+  background-color: #0d6efd;
+  border-radius: 20px;
+  color: white;
+}
