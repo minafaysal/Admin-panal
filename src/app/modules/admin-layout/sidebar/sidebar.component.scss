@@ -106,8 +106,8 @@ button:focus {
   height: 100%;
   min-height: 100vh;
   flex: 1;
-  min-width: 300px;
-  max-width: 300px;
+  min-width: 250px;
+  max-width: 250px;
   background: #32373d;
   color: #fff;
   transition: all 0.3s;
@@ -117,7 +117,7 @@ button:focus {
   color: #fff;
 }
 #sidebar.active {
-  margin-left: -300px;
+  margin-left: -250px;
 }
 #sidebar.active .custom-menu {
   margin-right: -50px;
@@ -176,7 +176,7 @@ button:focus {
 }
 @media (max-width: 991.98px) {
   #sidebar {
-    margin-left: -300px;
+    margin-left: -250px;
   }
   #sidebar.active {
     margin-left: 0;

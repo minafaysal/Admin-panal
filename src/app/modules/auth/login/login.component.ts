@@ -1,20 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../core/services/api-service/auth.service';
 import { ToastrService } from 'ngx-toastr';
-import { ComponentBase } from '../../../core/base/common-base';
+import { BaseComponent } from '../../../core/base/common-base';
 import { takeUntil } from 'rxjs';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'], // Corrected to 'styleUrls'
+  styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent extends ComponentBase implements OnInit {
+export class LoginComponent extends BaseComponent implements OnInit {
   loginForm!: FormGroup;
-  hide: boolean = true;
 
   constructor(
     private fb: FormBuilder,
@@ -28,6 +27,12 @@ export class LoginComponent extends ComponentBase implements OnInit {
 
   ngOnInit(): void {
     this.initializeForm();
+  }
+
+  hide = signal(true);
+  clickEvent(event: MouseEvent) {
+    this.hide.set(!this.hide());
+    event.stopPropagation();
   }
 
   private initializeForm(): void {
@@ -62,14 +67,13 @@ export class LoginComponent extends ComponentBase implements OnInit {
       .subscribe(
         (res) => {
           this.spinner.hide();
-          this.loading = false; 
+          this.loading = false;
           this.toastr.success('Login Successfully!');
           this.router.navigate(['/admin/products']);
         },
         (error) => {
           this.spinner.hide();
-          this.loading = false; 
-          this.toastr.error('Login failed. Please try again.');
+          this.loading = false;
         }
       );
   }

@@ -10,38 +10,39 @@
       </div>
       <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-          <div class="form-outline mb-4">
-            <label class="form-label" for="username">User name</label>
+          <mat-form-field appearance="fill" class="w-100 mb-4">
+            <mat-label>User name</mat-label>
             <input
+              matInput
               formControlName="username"
-              type="text"
               id="username"
-              class="form-control form-control-lg"
-              [ngClass]="{ 'is-invalid': username?.invalid && username?.touched }"
+              [ngClass]="{ 'ng-invalid': username?.invalid && username?.touched }"
             />
-            <div *ngIf="username?.invalid && username?.touched" class="invalid-feedback">
+            <mat-error *ngIf="username?.invalid && username?.touched">
               Username is required.
-            </div>
-          </div>
+            </mat-error>
+          </mat-form-field>
 
-          <div class="form-outline mb-4">
-            <label class="form-label" for="password">Password</label>
+          <mat-form-field appearance="fill" class="w-100 mb-4">
+            <mat-label>Password</mat-label>
             <input
+              matInput
               formControlName="password"
-              type="password" 
               id="password"
-              class="form-control form-control-lg"
-              [ngClass]="{ 'is-invalid': password?.invalid && password?.touched }"
+              type="password"
+              [ngClass]="{ 'ng-invalid': password?.invalid && password?.touched }"
             />
-            <div *ngIf="password?.invalid && password?.touched" class="invalid-feedback">
+            <mat-error *ngIf="password?.invalid && password?.touched">
               Password is required.
-            </div>
-          </div>
+            </mat-error>
+          </mat-form-field>
 
           <div class="d-flex justify-content-around align-items-center mb-4">
             <button
+              mat-raised-button
+              color="primary"
               type="submit"
-              class="btn btn-primary btn-lg btn-block"
+              class="w-100"
               [disabled]="!loginForm.valid"
             >
               Sign in
