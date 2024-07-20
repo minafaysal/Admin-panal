@@ -34,41 +34,23 @@ export class CategoryService {
       return this.categories$;
     }
   }
-
-  addCategory(category: Category): Observable<Category> {
-    return this.http.post<Category>(this.apiUrl, category).pipe(
-      tap((newCategory) => {
-        const currentCategories = this.categoriesSubject.getValue();
-        this.categoriesSubject.next([...currentCategories, newCategory]);
-      }),
-      catchError(this.errorHandlingService.handleError)
-    );
+  addCategory(category: Category): void {
+    const currentCategories = this.categoriesSubject.getValue();
+    this.categoriesSubject.next([...currentCategories, category]);
   }
 
-  updateCategory(category: Category): Observable<Category> {
-    return this.http
-      .put<Category>(`${this.apiUrl}/${category.id}`, category)
-      .pipe(
-        tap((updatedCategory) => {
-          const currentCategories = this.categoriesSubject.getValue();
-          const updatedCategories = currentCategories.map((c) =>
-            c.id === updatedCategory.id ? updatedCategory : c
-          );
-          this.categoriesSubject.next(updatedCategories);
-        }),
-        catchError(this.errorHandlingService.handleError)
-      );
+  updateCategory(category: Category): void {
+    const currentCategories = this.categoriesSubject.getValue();
+    const updatedCategories = currentCategories.map((c) =>
+      c === category ? category : c
+    );
+    this.categoriesSubject.next(updatedCategories);
   }
 
-  deleteCategory(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`).pipe(
-      tap(() => {
-        const currentCategories = this.categoriesSubject.getValue();
-        const updatedCategories = currentCategories.filter((c) => c.id !== id);
-        this.categoriesSubject.next(updatedCategories);
-      }),
-      catchError(this.errorHandlingService.handleError)
-    );
+  deleteCategory(category: Category): void {
+    const currentCategories = this.categoriesSubject.getValue();
+    const updatedCategories = currentCategories.filter((c) => c !== category);
+    this.categoriesSubject.next(updatedCategories);
   }
 
   getCurrentCategories(): Category[] {

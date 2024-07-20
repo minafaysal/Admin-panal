@@ -18,6 +18,7 @@ import { MatIconModule } from '@angular/material/icon';
 })
 export class CategoriesListComponent extends BaseComponent implements OnInit {
   categoriesList: Category[] = [];
+
   constructor(
     private categoryService: CategoryService,
     private spinner: NgxSpinnerService,
@@ -45,4 +46,8 @@ export class CategoriesListComponent extends BaseComponent implements OnInit {
   }
 
   addNewCategory(): void {}
+
+  removeCategory(category: Category): void {
+    this.categoryService.deleteCategory(category);
+  }
 }

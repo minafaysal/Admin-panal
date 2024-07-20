@@ -9,8 +9,15 @@
   </button>
 </div>
 <mat-chip-set aria-label="Fish selection">
-  @for(category of categoriesList; track category.id){
-  <mat-chip>{{ category }}</mat-chip> }@empty {
+  @for(category of categoriesList; track category){
+  <mat-chip
+    >{{ category
+    }}<i
+      class="fa-solid fa-x px-1 cursor-pointer"
+      (click)="removeCategory(category)"
+    ></i
+  ></mat-chip>
+  }@empty {
   <div clas="d-flex justify-content-center">
     <h4>No Categories Found</h4>
   </div>
