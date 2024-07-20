@@ -7,4 +7,4 @@
     Add New Product
   </button>
 </div>
-<app-product-card [productsList]="productsList"></app-product-card>
+<app-product-card [productsList]="productsList" (deleteProductEvent)="deleteProduct($event)"></app-product-card>

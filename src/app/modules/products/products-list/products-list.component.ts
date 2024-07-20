@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from '../../../core/models/product.model';
 import { ProductService } from '../../../core/services/api-service/products.service';
+import { ProductCardComponent } from '../../../shared/components/product-card/product-card.component';
 import { takeUntil } from 'rxjs';
 import { BaseComponent } from '../../../core/base/common-base';
-import { ProductCardComponent } from '../../../shared/components/product-card/product-card.component';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-products-list',
@@ -14,12 +15,17 @@ import { ProductCardComponent } from '../../../shared/components/product-card/pr
 })
 export class ProductsListComponent extends BaseComponent implements OnInit {
   productsList: Product[] = [];
+  // searchTerm: string = '';
 
-  constructor(private productService: ProductService) {
+  constructor(
+    private productService: ProductService,
+    private spinner: NgxSpinnerService
+  ) {
     super();
   }
 
   ngOnInit(): void {
+    this.spinner.show();
     this.loadProducts();
   }
   private loadProducts() {
@@ -28,6 +34,7 @@ export class ProductsListComponent extends BaseComponent implements OnInit {
       .pipe(takeUntil(this.destroy$))
       .subscribe((products) => {
         this.productsList = products;
+        this.spinner.hide();
       });
 
     // Check if products are already loaded, if not, fetch from server
@@ -36,7 +43,24 @@ export class ProductsListComponent extends BaseComponent implements OnInit {
     }
   }
 
-  private deleteProduct(id: number): void {}
+  // searchProducts(): void {
+  //   if (this.searchTerm) {
+  //     this.products = this.products.filter((product) =>
+  //       product.title.toLowerCase().includes(this.searchTerm.toLowerCase())
+  //     );
+  //   } else {
+  //     this.loadProducts();
+  //   }
+  // }
 
-  addNewProduct(): void {}
+  deleteProduct(id: number): void {
+
+    this.productService.deleteProduct(id).subscribe(() => {
+      this.productsList = this.productsList.filter(
+        (product) => product.id !== id
+      );
+    });
+  }
+
+  addNewProduct() {}
 }

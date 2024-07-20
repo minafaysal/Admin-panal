@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Product } from '../../../core/models/product.model';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../../shared.module';
@@ -12,7 +12,10 @@ import { SharedModule } from '../../shared.module';
 })
 export class ProductCardComponent {
   @Input() productsList: Product[] = [];
+  @Output() deleteProductEvent = new EventEmitter<number>();
 
   editProduct(productId: number) {}
-  deleteProduct(productId: number) {}
+  deleteProduct(productId: number): void {
+    this.deleteProductEvent.emit(productId);
+  }
 }
